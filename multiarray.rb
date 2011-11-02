@@ -24,7 +24,17 @@ class Multiarray
     @columns[0].count
   end
 
-  def populate_array
+  #Iterates through the multiarray a row at a time
+  def each
+      for i in 0...row_count
+          for j in 0...column_count
+              value = self[i][j]
+              yield(value)
+          end
+      end
+  end
+
+  def populate
       @columns.count.times {|colIndex| 
           thisRow = @columns[colIndex]
           thisRow.count.times {|rowIndex|
@@ -40,6 +50,10 @@ class Multiarray
       if column <= column_count && row <= row_count
           return @columns[column][row]
       end
+  end
+
+  def [](index)
+      return @columns[index]
   end
 
   def set_cell(column, row, value)

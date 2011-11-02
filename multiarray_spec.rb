@@ -21,7 +21,7 @@ describe "get_cell" do
     it "returns the correct cell" do
         ma = Multiarray.new(2, 3)
         index = 0
-        ma.populate_array { 
+        ma.populate { 
             index += 10
         }
         ma.get_cell(0,0).should == 10
@@ -34,10 +34,10 @@ describe "get_cell" do
     end
 end
 
-describe "populate_array" do
+describe "populate" do
     it "ensures that the cells are correctly initialised" do
         ma = Multiarray.new(2, 3)
-        ma.populate_array { Cell.new(true) }
+        ma.populate { Cell.new(true) }
 
         ma.get_cell(1, 2).class.should eq Cell
     end
@@ -47,7 +47,7 @@ describe "set_cell" do
     it "correctly sets a cell to a new value" do
         ma = Multiarray.new(2, 3)
         index = 0
-        ma.populate_array { 
+        ma.populate { 
             index += 10
         }
         ma.get_cell(0,2).should == 30
@@ -61,3 +61,18 @@ describe "set_cell" do
     end
 end
 
+describe "each" do
+    it "iterates through the multi array in the correct order" do
+        ma = Multiarray.new(3, 3)
+        index = 0
+        ma.populate { 
+            index += 10
+        }
+
+        test_value = 10
+        ma.each {|value|
+            value.should == test_value
+            test_value += 10
+        }
+    end
+end

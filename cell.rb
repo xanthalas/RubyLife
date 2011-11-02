@@ -10,13 +10,17 @@ class Cell
 
   attr_accessor :alive
 
-  attr_reader :alive_tomorrow, :iteration_last_updated
+  attr_reader :alive_tomorrow, :iteration_last_updated, :id
   
+  @@next_id = 1
+
   def initialize(is_alive)
 
     @alive = is_alive
     @alive_tomorrow = @alive
     @iteration_last_updated = 0
+    @id = @@next_id
+    @@next_id += 1
   end
 
   def alive?
@@ -72,6 +76,11 @@ class Cell
           }
       end
       return live_neighbour_count
+  end
+
+  #Reset the class
+  def self.reset
+    @@next_id = 1
   end
 end
 
