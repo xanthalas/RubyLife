@@ -31,6 +31,11 @@ class Cell
       return @alive_tomorrow
   end
 
+  #Set the cell to it's computed "tomorrow" value
+  def new_day
+      @alive = @alive_tomorrow
+  end
+
   # Determine the fate of this cell
   def determine_tomorrow(neighbour_array)
     if self.alive? 
@@ -45,6 +50,7 @@ class Cell
   # This cell is currently alive. See if it survives
   def determine_if_cell_survives(neighbour_array)
       live_neighbour_count = get_live_neighbour_count(neighbour_array)
+#puts "Alive=#{self.alive?} Neighbour count=#{live_neighbour_count} Array=#{neighbour_array}"
 
       if live_neighbour_count < 2
         @alive_tomorrow = false 
@@ -58,6 +64,7 @@ class Cell
   # This cell is currently dead. See if it springs to life
   def determine_if_cell_is_born(neighbour_array)
       live_neighbour_count = get_live_neighbour_count(neighbour_array)
+#puts "Alive=#{self.alive?} Neighbour count=#{live_neighbour_count} Array=#{neighbour_array}"
 
       if live_neighbour_count == 3
           @alive_tomorrow = true

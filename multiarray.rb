@@ -24,10 +24,10 @@ class Multiarray
     @columns[0].count
   end
 
-  #Iterates through the multiarray a row at a time
+  #Iterates through the multiarray a column at a time
   def each
-      for i in 0...row_count
-          for j in 0...column_count
+      for i in 0...column_count
+          for j in 0...row_count
               value = self[i][j]
               yield(value)
           end

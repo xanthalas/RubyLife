@@ -1,0 +1,6 @@
+#Ignore VIM swap files
+*.swp
+#Ignore tags file
+tags
+#Ignore the documentation folder produced by RDoc
+doc/
