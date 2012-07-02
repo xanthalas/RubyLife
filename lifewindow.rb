@@ -14,16 +14,20 @@ class LifeWindow < Gosu::Window
     attr_accessor :grid
 
     def initialize(the_grid)
-        super(600, 600, false, 1000) 
+        super(600, 600, false, 500) 
         self.caption = "RubyLife"
         @grid = the_grid
         @live_cell_image = Gosu::Image.new(self, "images/Cell50x50.png", false)
         @dead_cell_image = Gosu::Image.new(self, "images/Empty50x50.png", false)
-        @font = Gosu::Font.new(self, Gosu::default_font_name, 20)
+        @font = Gosu::Font.new(self, Gosu::default_font_name, 18)
+
+        @paused = true
     end
 
     def update
-        @grid.next_generation
+        if !@paused
+            @grid.next_generation
+        end
     end
 
     def draw
@@ -43,8 +47,24 @@ class LifeWindow < Gosu::Window
             top = top + 50
         end
         
-        @font.draw("Generation: #{@grid.generation}", 10, 550, 0, 1.0, 1.0, 0xffffff00)
+        @font.draw("Generation: #{@grid.generation} #{ if @paused then '(paused)' end}", 10, 550, 0, 1.0, 1.0, 0xffffff00)
+        @font.draw("Space to pause, s to step (when paused) & Esc to quit", 10, 580, 0, 1.0, 1.0, 0xffffff00)
     end
+    
+    def button_down(id)
+    if id == Gosu::KbEscape
+      close
+    end
+    if button_down? Gosu::KbSpace then
+        @paused = !@paused
+    end
+    if button_down? char_to_button_id('s') then
+        @grid.next_generation
+    end
+    if button_down? char_to_button_id('q') then
+        close
+    end
+  end
 end
 
 
